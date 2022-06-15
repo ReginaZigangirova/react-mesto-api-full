@@ -1,7 +1,6 @@
  class Api {
-     constructor({ baseUrl, headers }) {
-         this._headers = headers
-         this._baseUrl = baseUrl
+     constructor({ baseUrl }) {
+         this.url = baseUrl
      }
 
      get _headers() {
@@ -19,18 +18,18 @@
          }
      }
      getProfile() {
-         return fetch(`${this._baseUrl}/users/me`, {
+         return fetch(`${this.url}/users/me`, {
              headers: this._headers
          }).then(this._checkResponse)
      }
 
      getInitialCards() {
-         return fetch(`${this._baseUrl}/cards`, {
+         return fetch(`${this.url}/cards`, {
              headers: this._headers
          }).then(this._checkResponse)
      }
      editProfile(name, about) {
-         return fetch(`${this._baseUrl}/users/me`, {
+         return fetch(`${this.url}/users/me`, {
                  method: 'PATCH',
                  headers: this._headers,
                  body: JSON.stringify({
@@ -41,7 +40,7 @@
              .then(this._checkResponse)
      }
      addCard(name, link) {
-         return fetch(`${this._baseUrl}/cards`, {
+         return fetch(`${this.url}/cards`, {
              method: "POST",
              headers: this._headers,
              body: JSON.stringify({
@@ -52,19 +51,19 @@
      }
 
      deleteCard(id) {
-         return fetch(`${this._baseUrl}/cards/${id} `, {
+         return fetch(`${this.url}/cards/${id} `, {
              method: "DELETE",
              headers: this._headers,
          }).then(this._checkResponse)
      }
      deleteLike(id) {
-         return fetch(`${this._baseUrl}/cards/${id}/likes `, {
+         return fetch(`${this.url}/cards/${id}/likes `, {
              method: "DELETE",
              headers: this._headers,
          }).then(this._checkResponse)
      }
      addLike(id) {
-         return fetch(`${this._baseUrl}/cards/${id}/likes `, {
+         return fetch(`${this.url}/cards/${id}/likes `, {
              method: "PUT",
              headers: this._headers,
          }).then(this._checkResponse)
@@ -77,7 +76,7 @@
          }
      }
      setAvatar(avatar) {
-         return fetch(`${this._baseUrl}/users/me/avatar`, {
+         return fetch(`${this.url}/users/me/avatar`, {
              method: 'PATCH',
              headers: this._headers,
              body: JSON.stringify({
@@ -88,6 +87,6 @@
  }
 
  const api = new Api({
-     baseUrl: 'https://api.regina.student.nomoreparties.sbs',
+     baseUrl: 'http://localhost:3001',
  });
  export default api

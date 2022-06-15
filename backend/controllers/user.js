@@ -2,8 +2,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+const { JWT_SECRET, NODE_ENV } = process.env;
 const InvalidRequest = require('../errors/InvalidRequest');
-const AuthError = require('../errors/AuthError');
+// const AuthError = require('../errors/AuthError');
 const NotFound = require('../errors/NotFound');
 const Conflict = require('../errors/Conflict');
 // создаёт пользователя
@@ -50,14 +51,11 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
-      if (!email || !password) {
-        next(new AuthError('некорректный email или пароль'));
-      }
-      res.cookie('jwt', token, {
-        maxAge: 604800000,
-        httpOnly: true,
-      }).send({ token });
+      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'}`, { expiresIn: '7d' });
+      // if (!email || !password) {
+      //     next(new AuthError('некорректный email или пароль'));
+      // }).
+      res.send({ token });
     })
     .catch((err) => {
       next(err);

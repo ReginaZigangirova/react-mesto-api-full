@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.regina.student.nomoreparties.sbs';
+export const BASE_URL = 'http://localhost:3001';
 
 const getResponse = (res) => {
     if (res.ok) {
@@ -7,34 +7,36 @@ const getResponse = (res) => {
     return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const register = (password, email) => {
+export const register = (email, password) => {
     return fetch(`${BASE_URL}/signup`, {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ password, email })
+            body: JSON.stringify({ email, password })
         })
         .then(getResponse)
 };
 
-export const authorization = (password, email) => {
+export const authorization = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ password, email })
+            body: JSON.stringify({ email, password })
         })
         .then(getResponse)
 };
 
-export const validityToken = (jwt) => {
+export const validityToken = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${jwt}`
+                "Authorization": `Bearer ${token}`
             }
         })
         .then(getResponse)

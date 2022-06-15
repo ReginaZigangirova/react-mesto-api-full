@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
@@ -45,7 +44,6 @@ app.use('*', auth, (req, res, next) => {
 });
 
 app.use(errors());
-app.use(cors());
 
 app.get('/crash-test', () => {
     setTimeout(() => {

@@ -3,6 +3,14 @@
          this._headers = headers
          this._baseUrl = baseUrl
      }
+
+     get _headers() {
+         return {
+             'Content-Type': 'application/json',
+             authorization: `Bearer ${localStorage.getItem("jwt")}`,
+         }
+     }
+
      _checkResponse(res) {
          if (res.ok) {
              return res.json()
@@ -80,10 +88,6 @@
  }
 
  const api = new Api({
-     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-37',
-     headers: {
-         authorization: '0422eec2-f505-49eb-b34a-7793c9abd9fe',
-         'Content-Type': 'application/json'
-     }
+     baseUrl: 'https://api.regina.student.nomoreparties.sbs',
  });
  export default api

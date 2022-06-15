@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors');
+const cors = require('./middlewares/cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');

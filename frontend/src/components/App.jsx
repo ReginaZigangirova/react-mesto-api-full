@@ -34,7 +34,7 @@ function App() {
       history.push('/');
     Promise.all([api.getProfile(), api.getInitialCards()])
       .then(([user,cards]) => {
-        setCards(cards);
+        setCards(cards.reverse());
         setCurrentUser(user);
       })
       .catch((err) => {

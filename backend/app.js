@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+const cors = require('cors');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login } = require('./controllers/user');
 const auth = require('./middlewares/auth');
 const NotFound = require('./errors/NotFound');
@@ -15,8 +16,9 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(express.json());
+// app.use(cookieParser());
+app.use(requestLogger);
 app.use(cors());
-app.use(cookieParser());
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -46,6 +48,7 @@ app.use('*', auth, (req, res, next) => {
   next(new NotFound('Страница с таким url не найдена.'));
 });
 
+app.use(errorLogger);
 app.use(errors());
 
 app.get('/crash-test', () => {

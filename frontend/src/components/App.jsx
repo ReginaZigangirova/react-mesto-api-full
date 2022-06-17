@@ -116,7 +116,7 @@ function handleAddPlaceSubmit(data) {
     console.error(err);
   });
 }
-const onLogin = (email, password) => {
+const onLogin = (password, email) => {
   auth
     .authorization(password, email)
     .then((res) => {
@@ -132,9 +132,9 @@ const onLogin = (email, password) => {
       setIsInfoTooltipOpen(true);
     });
 }
-const onRegister = (email, password) => {
+const onRegister = (password, email) => {
   auth
-    .register(email, password)
+    .register(password, email)
     .then((res) => {        
       if(res) {
         setMessage(true);

@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.regina.student.nomoreparties.sbs';
+export const BASE_URL = 'http://localhost:3000';
 
 const getResponse = (res) => {
     if (res.ok) {

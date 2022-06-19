@@ -87,6 +87,6 @@
  }
 
  const api = new Api({
-     baseUrl: 'https://api.regina.student.nomoreparties.sbs',
+     baseUrl: 'http://localhost:3000',
  });
  export default api
